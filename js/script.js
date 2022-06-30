@@ -159,19 +159,44 @@ const isCard = () => {
     return isCC && isZip && isCvv;
 };
 
-const isForm = () => {
-//refactor somehow
-    if (cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
-        return false;
-    } else if (!cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
-        return false;
-    } else { 
-        return true;
-    }
-};
+// const isForm = () => {
+// //refactor somehow
+//     nameValid = !isName();
+//     emailValid = !isEmail();
+//     registerValid = !isRegistered();
 
-form.addEventListener('submit', e => {      
-    isForm() ? alert('Submitted!') : e.preventDefault();
+//     if (cc.hidden && nameValid && emailValid && registerValid) {
+//         return false;
+//     } else if (!cc.hidden && nameValid && emailValid && registerValid) {
+//         return false;
+//     } else { 
+//         return true;
+//     }
+    // if (cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
+    //     return false;
+    // } else if (!cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
+    //     return false;
+    // } else { 
+    //     return true;
+    // }
+// };
+
+form.addEventListener('submit', e => {     
+    // isForm() ? alert('Submitted!') : e.preventDefault();
+    if(!isName()){
+        e.preventDefault();     
+    }
+    if(!isEmail()){
+        e.preventDefault();
+    }
+    if(!isRegistered()){
+        e.preventDefault();
+    }
+    if(!cc.hidden){
+        if(!isCard()){
+            e.preventDefault();
+        }  
+    }
 }); 
 
 
