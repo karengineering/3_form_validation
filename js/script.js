@@ -22,6 +22,7 @@ let cc = document.querySelector('#cc-num');
 let zip = document.querySelector('#zip');
 let cvv = document.querySelector('#cvv');
 
+let activitiesBox = document.querySelector('#activities-box');
 let checkboxes = document.querySelectorAll('input[type=checkbox]');
 
 /*
@@ -143,7 +144,7 @@ const isEmail = () => {
 
 const isRegistered = () => {
     let hasTotal = total > 0;
-    hasTotal ? isValid(activities) : notValid(activities);
+    hasTotal ? isValid(activitiesBox) : notValid(activitiesBox);
     return hasTotal; 
 };
 
@@ -192,13 +193,13 @@ form.addEventListener('submit', e => {
     if(!isRegistered()){
         e.preventDefault();
     }
-    if(!cc.hidden){
+    // if(!cc.hidden){
+    if(payment.value === 'credit-card'){
         if(!isCard()){
             e.preventDefault();
         }  
     }
 }); 
-
 
 /*
 Accessibility
