@@ -32,9 +32,14 @@ nameField.focus();
 
 /*
 "Job Role" section
+has an <input type="text"> field where users can enter a custom job role. 
+If the user selects "Other" in the "Job Role" drop down menu, they can enter info into the "Other job role" text field. 
+But this field should be hidden by default and only displayed once users select "Other" in the drop down menu, and be hidden if the user selects any other option.
 */
+//Hides the "text field" with the id of "other-job-role" so it is not displayed when the form first loads
 otherTextField.style.display = 'none';
-
+//Listen for user changes on "Job Role" <select> element
+//When a change is detected, displays/hides the "text field" based on the user’s selection in the drop down menu
 jobTitle.addEventListener('change', (e) => {
     if (e.target.value === 'other') {
         otherTextField.style.display = '';
@@ -51,6 +56,7 @@ color.disabled = true;
 design.addEventListener('change', (e) => {
    color.disabled = false;
 
+   //"Color" dropdown menu displays only the color options associated with the selected design
    for(let i=0; i<color.length; i++) {
         if(e.target.value === color.children[i].getAttribute('data-theme')) {
             color[i].hidden = false;
@@ -64,6 +70,8 @@ design.addEventListener('change', (e) => {
    
 /*
 Register for Activities" section
+
+updates to reflect the sum of the cost of the user’s selected activities
 */
 activities.addEventListener('change', (e) => {
     let cost = +e.target.getAttribute('data-cost');
@@ -74,32 +82,15 @@ activities.addEventListener('change', (e) => {
 
 /*
 "Payment Info" section
+
+credit card payment option is selected for the user by default
 */
 payment[1].selected = true;
 paypal.hidden = true;
 bitcoin.hidden = true;
 
+//When a change is detected, all payment sections in the form’s UI are hidden except the selected one
 payment.addEventListener('change', (e) => {
-    // let pay = Array.from(payment);
-    // for (let i=0; i<pay; i++) {
-    //     console.log(pay[i]);
-    // }
-    // console.log(Array.from(payment));
-    // Array.from(payment).forEach( type => {
-    //     // if (e.target.value === type)
-    //     console.log(type[0]);
-    // });
-
-    // for(let i=0; i<color.length; i++) {
-
-    // if(e.target.value === color.children[i].getAttribute('data-theme')) {
-    //     color[i].hidden = false;
-    //     color[i].selected = true;
-    // } else {
-    //     color[i].hidden = true;
-    //     color[i].selected = false;
-    // }
-
     if (e.target.value === 'credit-card') {
         creditCard.hidden = false;
         paypal.hidden = true;
@@ -160,30 +151,7 @@ const isCard = () => {
     return isCC && isZip && isCvv;
 };
 
-// const isForm = () => {
-// //refactor somehow
-//     nameValid = !isName();
-//     emailValid = !isEmail();
-//     registerValid = !isRegistered();
-
-//     if (cc.hidden && nameValid && emailValid && registerValid) {
-//         return false;
-//     } else if (!cc.hidden && nameValid && emailValid && registerValid) {
-//         return false;
-//     } else { 
-//         return true;
-//     }
-    // if (cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
-    //     return false;
-    // } else if (!cc.hidden && (!isName() || !isEmail() || !isRegistered())) {
-    //     return false;
-    // } else { 
-    //     return true;
-    // }
-// };
-
 form.addEventListener('submit', e => {     
-    // isForm() ? alert('Submitted!') : e.preventDefault();
     if(!isName()){
         e.preventDefault();     
     }
@@ -193,7 +161,6 @@ form.addEventListener('submit', e => {
     if(!isRegistered()){
         e.preventDefault();
     }
-    // if(!cc.hidden){
     if(payment.value === 'credit-card'){
         if(!isCard()){
             e.preventDefault();
@@ -203,6 +170,8 @@ form.addEventListener('submit', e => {
 
 /*
 Accessibility
+
+Make the focus states of the activities more obvious to all users
 */
 Array.from(checkboxes).forEach(cb => {
     cb.addEventListener('focus', e => {
@@ -212,12 +181,6 @@ Array.from(checkboxes).forEach(cb => {
         cb.parentNode.classList.remove('focus');
     })
 });
-
-/*
-Simple Test Values
-*/
-//1234567891012
-//a@a.com
 
 
 
